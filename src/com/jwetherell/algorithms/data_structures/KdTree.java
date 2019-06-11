@@ -21,9 +21,10 @@ import java.util.TreeSet;
  * useful data structure for several applications, such as searches involving a
  * multidimensional search key (e.g. range searches and nearest neighbor
  * searches). k-d trees are a special case of binary space partitioning trees.
- *
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/K-d_tree">K-D Tree (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
- * @see <a href="http://en.wikipedia.org/wiki/K-d_tree">K-d_tree (Wikipedia)</a>
  */
 public class KdTree<T extends KdTree.XYZPoint> implements Iterable<T> {
 
@@ -149,12 +150,12 @@ public class KdTree<T extends KdTree.XYZPoint> implements Iterable<T> {
                 }
             }
 
-            if ((medianIndex - 1) >= 0 && less.size() > 0) {
+            if ((medianIndex-1 >= 0) && less.size() > 0) {
                 node.lesser = createNode(less, k, depth + 1);
                 node.lesser.parent = node;
             }
 
-            if ((medianIndex + 1) <= (list.size() - 1) && more.size() > 0) {
+            if ((medianIndex <= list.size()-1) && more.size() > 0) {
                 node.greater = createNode(more, k, depth + 1);
                 node.greater.parent = node;
             }

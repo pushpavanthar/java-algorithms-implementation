@@ -3,6 +3,14 @@ package com.jwetherell.algorithms.sequence;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The longest common subsequence (LCS) problem is the problem of finding the longest subsequence common to all sequences in a set of sequences (often just two sequences). It differs from problems 
+ * of finding common substrings: unlike substrings, subsequences are not required to occupy consecutive positions within the original sequences. 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Longest_common_subsequence_problem">Longest Common Subsequence Problem (Wikipedia)</a>
+ * <br>
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
 @SuppressWarnings("unchecked")
 public class LongestCommonSubsequence {
 
@@ -10,6 +18,23 @@ public class LongestCommonSubsequence {
     private static Set<String>[][] sequenceMatrix = null;
 
     private LongestCommonSubsequence() { }
+
+    public static MatrixPair getLCS(char[] seq1, char[] seq2) {
+        try {
+            populateMatrix(seq1, seq2);
+    
+            for (int i = 0; i < seq1.length; i++) {
+                for (int j = 0; j < seq2.length; j++) {
+                    lengthMatrix[i + 1][j + 1] = longestCommonSubsequence(i, j, seq1, seq2);
+                }
+            }
+    
+            return (new MatrixPair(lengthMatrix, sequenceMatrix));
+        } finally {
+            lengthMatrix = null;
+            sequenceMatrix = null;
+        }
+    }
 
     private static void populateMatrix(char[] seq1, char[] seq2) {
         lengthMatrix = new int[seq1.length + 1][seq2.length + 1];
@@ -71,18 +96,6 @@ public class LongestCommonSubsequence {
                 set.add(string);
             }
         }
-    }
-
-    public static MatrixPair getLCS(char[] seq1, char[] seq2) {
-        populateMatrix(seq1, seq2);
-
-        for (int i = 0; i < seq1.length; i++) {
-            for (int j = 0; j < seq2.length; j++) {
-                lengthMatrix[i + 1][j + 1] = longestCommonSubsequence(i, j, seq1, seq2);
-            }
-        }
-
-        return (new MatrixPair(lengthMatrix, sequenceMatrix));
     }
 
     public static class MatrixPair {

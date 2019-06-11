@@ -16,9 +16,9 @@ import com.jwetherell.algorithms.data_structures.interfaces.IHeap;
  * the tree is not complete, the nodes of that level are filled from left to
  * right. 2) The heap property: each node is right than or equal to each of its
  * children according to a comparison predicate defined for the data structure.
- * 
- * http://en.wikipedia.org/wiki/Binary_heap
- * 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Binary_heap">Binary Heap (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 @SuppressWarnings("unchecked")
@@ -289,8 +289,8 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         /**
          * Validate the node for the heap invariants.
          * 
-         * @param node
-         *            to validate for.
+         * @param index
+         *            of node to validate for.
          * @return True if node is valid.
          */
         private boolean validateNode(int index) {
@@ -341,7 +341,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
          */
         @Override
         public T getHeadValue() {
-            if (array.length == 0) return null;
+            if (size == 0 || array.length == 0) return null;
             return array[0];
         }
 
@@ -372,7 +372,7 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         protected static class HeapPrinter {
 
             public static <T extends Comparable<T>> String getString(BinaryHeapArray<T> tree) {
-                if (tree.array.length == 0)
+                if (tree.size == 0 || tree.array.length == 0)
                     return "Tree has no nodes.";
 
                 T root = tree.array[0];
@@ -449,8 +449,8 @@ public interface BinaryHeap<T extends Comparable<T>> extends IHeap<T> {
         /**
          * Get the navigation directions through the tree to the index.
          * 
-         * @param index
-         *            of the Node to get directions for.
+         * @param idx
+         *           index of the Node to get directions for.
          * @return Integer array representing the directions to the index.
          */
         private static int[] getDirections(int idx) {

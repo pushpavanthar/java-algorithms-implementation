@@ -14,9 +14,9 @@ import com.jwetherell.algorithms.data_structures.interfaces.ITree;
  * two children. Unlike self-balancing binary search trees, the B-tree is
  * optimized for systems that read and write large blocks of data. It is
  * commonly used in databases and file-systems.
- * 
- * http://en.wikipedia.org/wiki/B-tree
- * 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/B-tree">B-Tree (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 @SuppressWarnings("unchecked")
@@ -109,7 +109,7 @@ public class BTree<T extends Comparable<T>> implements ITree<T> {
     /**
      * The node's key size is greater than maxKeySize, split down the middle.
      * 
-     * @param node
+     * @param nodeToSplit
      *            to split.
      */
     private void split(Node<T> nodeToSplit) {

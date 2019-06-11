@@ -2,6 +2,14 @@ package com.jwetherell.algorithms.data_structures;
 
 import com.jwetherell.algorithms.data_structures.interfaces.IQueue;
 
+/**
+ * In computer science, a queue is a particular kind of abstract data type or collection in which the entities in the collection are kept in order and the principal (or only) operations 
+ * on the collection are the addition of entities to the rear terminal position, known as enqueue, and removal of entities from the front terminal position, known as dequeue. 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">Queue (Wikipedia)</a>
+ * <br>
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
 @SuppressWarnings("unchecked")
 public interface Queue<T> extends IQueue<T> {
 
@@ -52,7 +60,7 @@ public interface Queue<T> extends IQueue<T> {
 
             int shrinkSize = array.length>>1;
             if (shrinkSize >= MINIMUM_SIZE && size < shrinkSize)
-                shrink(size);
+                shrink();
 
             return t;
         }
@@ -97,23 +105,23 @@ public interface Queue<T> extends IQueue<T> {
 
             int shrinkSize = array.length>>1;
             if (shrinkSize >= MINIMUM_SIZE && size() < shrinkSize)
-                shrink(size());
+                shrink();
 
             lastIndex--;
             return true;
         }
 
-        // Grow the array by 50% and rearrange to make sequential
+        // Triple the size of the underlying array and rearrange to make sequential
         private void grow(int size) {
             int growSize = (size + (size<<1));
             T[] temp = (T[]) new Object[growSize];
             // Since the array can wrap around, make sure you grab the first chunk 
             int adjLast = lastIndex % array.length;
-            if (adjLast < firstIndex) {
-                System.arraycopy(array, 0, temp, array.length-adjLast, adjLast+1);
+            if (adjLast > 0 && adjLast <= firstIndex) {
+                System.arraycopy(array, 0, temp, array.length-adjLast, adjLast);
             }
             // Copy the remaining
-            System.arraycopy(array, firstIndex, temp, 0, array.length-firstIndex);
+            System.arraycopy(array, firstIndex, temp, 0, array.length - firstIndex);
             array = null;
             array = temp;
             lastIndex = (lastIndex - firstIndex);
@@ -121,14 +129,14 @@ public interface Queue<T> extends IQueue<T> {
         }
 
         // Shrink the array by 50% and rearrange to make sequential
-        private void shrink(int size) {
+        private void shrink() {
             int shrinkSize = array.length>>1;
             T[] temp = (T[]) new Object[shrinkSize];
             // Since the array can wrap around, make sure you grab the first chunk 
             int adjLast = lastIndex % array.length;
-            int endIndex = (lastIndex>array.length)?array.length:lastIndex;
+            int endIndex = (lastIndex>array.length) ? array.length : lastIndex;
             if (adjLast <= firstIndex) {
-                System.arraycopy(array, 0, temp, array.length-firstIndex, adjLast);
+                System.arraycopy(array, 0, temp, array.length - firstIndex, adjLast);
             }
             // Copy the remaining
             System.arraycopy(array, firstIndex, temp, 0, endIndex-firstIndex);
@@ -555,7 +563,7 @@ public interface Queue<T> extends IQueue<T> {
             public T next() {
                 if (queue.firstIndex+index < queue.lastIndex) {
                     last = queue.firstIndex+index;
-                    return queue.array[queue.firstIndex+index++];
+                    return queue.array[(queue.firstIndex + index++) % queue.array.length];
                 }
                 return null;
             }

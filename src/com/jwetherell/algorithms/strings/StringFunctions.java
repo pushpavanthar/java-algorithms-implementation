@@ -3,6 +3,11 @@ package com.jwetherell.algorithms.strings;
 import java.util.BitSet;
 import java.util.StringTokenizer;
 
+/**
+ * This class contains methods for modifying text.
+ * <p>
+ * @author Justin Wetherell <phishman3579@gmail.com>
+ */
 public class StringFunctions {
 
     private static final char SPACE = ' ';
@@ -16,7 +21,7 @@ public class StringFunctions {
     }
 
     public static final String reverseWithStringBuilder(String string) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         for (int i = (string.length() - 1); i >= 0; i--) {
             builder.append(string.charAt(i));
         }
@@ -24,14 +29,15 @@ public class StringFunctions {
     }
 
     public static final String reverseWithStringBuilderBuiltinMethod(String string) {
-        StringBuilder builder = new StringBuilder(string);
+        final StringBuilder builder = new StringBuilder(string);
         return builder.reverse().toString();
     }
 
     public static final String reverseWithSwaps(String string) {
-        char[] array = string.toCharArray();
-        int length = array.length - 1;
-        int half = (int) Math.floor(array.length / 2);
+        final char[] array = string.toCharArray();
+        final int length = array.length - 1;
+        final int half = (int) Math.floor(array.length / 2);
+
         char c;
         for (int i = length; i >= half; i--) {
             c = array[length - i];
@@ -42,9 +48,10 @@ public class StringFunctions {
     }
 
     public static final String reverseWithXOR(String string) {
-        char[] array = string.toCharArray();
-        int length = array.length;
-        int half = (int) Math.floor(array.length / 2);
+        final char[] array = string.toCharArray();
+        final int length = array.length;
+        final int half = (int) Math.floor(array.length / 2);
+
         for (int i = 0; i < half; i++) {
             array[i] ^= array[length - i - 1];
             array[length - i - 1] ^= array[i];
@@ -54,13 +61,13 @@ public class StringFunctions {
     }
 
     public static final String reverseWordsByCharWithAdditionalStorage(String string) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
+        final int length = string.length() - 1;
+        final StringBuilder temp = new StringBuilder();
 
         char c = 0;
         int index = 0;
         int last = string.length();
-        int length = string.length() - 1;
-        StringBuilder temp = new StringBuilder();
         for (int i = length; i >= 0; i--) {
             c = string.charAt(i);
             if (c == SPACE || i == 0) {
@@ -78,9 +85,8 @@ public class StringFunctions {
     }
 
     public static final String reverseWordsUsingStringTokenizerWithAdditionalStorage(String string) {
+        final StringTokenizer st = new StringTokenizer(string);
         String output = new String();
-
-        StringTokenizer st = new StringTokenizer(string);
         while (st.hasMoreTokens()) {
             output = (st.nextToken()) + ' ' + output;
         }
@@ -89,13 +95,12 @@ public class StringFunctions {
     }
 
     public static final String reverseWordsUsingSplitWithAdditionalStorage(String string) {
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
+        final String[] temp = string.split(" ");
 
-        String[] temp = string.split(" ");
         for (int i = (temp.length - 1); i >= 0; i--) {
             builder.append(temp[i]).append(' ');
         }
-
         return builder.toString().trim();
     }
 
@@ -185,14 +190,14 @@ public class StringFunctions {
     }
 
     public static final boolean isPalindromeWithAdditionalStorage(String string) {
-        String reversed = new StringBuilder(string).reverse().toString();
+        final String reversed = new StringBuilder(string).reverse().toString();
         return string.equals(reversed);
     }
 
     public static final boolean isPalindromeInPlace(String string) {
-        char[] array = string.toCharArray();
-        int length = array.length - 1;
-        int half = Math.round(array.length / 2);
+        final char[] array = string.toCharArray();
+        final int length = array.length - 1;
+        final int half = Math.round(array.length / 2f);
         char a, b;
         for (int i = length; i >= half; i--) {
             a = array[length - i];
@@ -203,15 +208,15 @@ public class StringFunctions {
         return true;
     }
 
-    public static final String[] generateSubsets(String input) {
-        int length = input.length();
-        int size = (int) Math.pow(2, length);
-        BitSet[] sets = new BitSet[size];
-        String[] output = new String[size];
+    public static final String[] generateSubsets(String inputString) {
+        final int length = inputString.length();
+        final int size = (int) Math.pow(2, length);
+        final BitSet[] sets = new BitSet[size];
+        final String[] output = new String[size];
 
         for (int i = 0; i < size; i++) {
-            BitSet set = new BitSet(size);
-            StringBuilder builder = new StringBuilder();
+            final BitSet set = new BitSet(size);
+            final StringBuilder builder = new StringBuilder();
             if (i > 0) {
                 for (int j = length - 1; j >= 0; j--) {
                     if (j == length - 1) {
@@ -228,61 +233,21 @@ public class StringFunctions {
                         set.set(j, prev);
                     }
                     if (set.get(j))
-                        builder.append(input.charAt(j));
+                        builder.append(inputString.charAt(j));
                 }
             }
             sets[i] = set;
             output[i] = builder.toString();
         }
-
         return output;
     }
 
-    private static final int numberOfPermutations(int N) {
-        // factorial
-        int result = N;
-        while (N > 1)
-            result *= --N;
-        return result;
-    }
-
-    private static final int permutations(String[] list, int index, char[] prefix, char[] remaining, int prefixLength, int remainingLength) {
-        final int N = remainingLength-prefixLength;
-        if (N == 0) {
-            list[index]=new String(prefix);
-            index++;
-        } else {
-            for (int i=0; i<N; i++) {
-                final char[] prefChars = new char[prefixLength+1];
-                System.arraycopy(prefix, 0, prefChars, 0, prefixLength);
-                System.arraycopy(remaining, i, prefChars, prefixLength, 1);
-
-                final char[] restChars = new char[N-1];
-                System.arraycopy(remaining, 0,   restChars, 0, i);
-                System.arraycopy(remaining, i+1, restChars, i, N-(i+1));
-
-                index = permutations(list, index, prefChars, restChars, remainingLength-(N-1), remainingLength);
-            }
-        }
-        return index;
-    }
-
-    /** N! permutation of the characters of the string (in order) **/
-    public static String[] permutations(String string) {
-        final int size = numberOfPermutations(string.length());
-        final String[] list = new String[size];
-        final char[] prefix = new char[0];
-        final char[] chars = string.toCharArray();
-        permutations(list, 0, prefix, chars, 0, chars.length);
-        return list;
-    }
-
-    public static final int levenshteinDistance(String s, String t) {
-        int sLength = s.length();
-        int tLength = t.length();
-
-        char[] sChars = s.toCharArray();
-        char[] tChars = t.toCharArray();
+    /** recursive **/
+    public static final int levenshteinDistanceRecursive(String s, String t) {
+        final int sLength = s.length();
+        final int tLength = t.length();
+        final char[] sChars = s.toCharArray();
+        final char[] tChars = t.toCharArray();
 
         int cost = 0;
         if ((sLength > 0 && tLength > 0) && sChars[0] != tChars[0])
@@ -293,12 +258,51 @@ public class StringFunctions {
         else if (tLength == 0)
             return sLength;
         else {
-            int min1 = levenshteinDistance(s.substring(1), t) + 1;
-            int min2 = levenshteinDistance(s, t.substring(1)) + 1;
-            int min3 = levenshteinDistance(s.substring(1), t.substring(1)) + cost;
+            final int min1 = levenshteinDistanceRecursive(s.substring(1), t) + 1;
+            final int min2 = levenshteinDistanceRecursive(s, t.substring(1)) + 1;
+            final int min3 = levenshteinDistanceRecursive(s.substring(1), t.substring(1)) + cost;
 
             int minOfFirstSet = Math.min(min1, min2);
             return (Math.min(minOfFirstSet, min3));
         }
+    }
+
+    /** iterative - dynamic programming **/
+    public static final int levenshteinDistanceIterative(String string1, String string2) {
+        final char[] s = string1.toCharArray();
+        final char[] t = string2.toCharArray();
+        final int m = s.length;
+        final int n = t.length;
+
+        // for all i and j, d[i,j] will hold the Levenshtein distance between
+        // the first i characters of s and the first j characters of t
+        // note that d has (m+1)*(n+1) values
+        final int[][] d = new int[m+1][n+1];
+
+        // source prefixes can be transformed into empty string by
+        // dropping all characters
+        for (int i=1; i<=m; i++)
+            d[i][0] = i;
+
+        // target prefixes can be reached from empty source prefix
+        // by inserting every character
+        for (int j=1; j<=n; j++)
+            d[0][j] = j;
+
+        int substitutionCost;
+        for (int j=1; j<=n; j++) {
+            for (int i=1; i<=m; i++) {
+                if (s[i-1] == t[j-1])
+                    substitutionCost = 0;
+                else
+                    substitutionCost = 1;
+
+                int minOfInsAndDel = Math.min(d[i-1][j] + 1,          // deletion
+                                              d[i][j-1] + 1);         // insertion
+                d[i][j] =  Math.min(minOfInsAndDel,                   // minimum of insert and delete
+                                    d[i-1][j-1] + substitutionCost);  // substitution
+            }
+        }
+        return d[m][n];
     }
 }

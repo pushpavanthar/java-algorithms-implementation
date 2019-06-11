@@ -15,27 +15,6 @@ public class Numbers {
     private static final Random RANDOM = new Random();
 
     @Test
-    public void testGCD() {
-        int x = 1989;
-        int y = 867;
-        int gcd = Integers.euclidsGreatestCommonDivsor(x, y);
-        int check = 51;
-        assertTrue("Euclids GCD error. expected="+check+" got="+gcd, (gcd==check));
-
-        x = 567;
-        y = 56;
-        gcd = Integers.euclidsGreatestCommonDivsor(x, y);
-        check = 7;
-        assertTrue("Euclids GCD error. expected="+check+" got="+gcd, (gcd==check));
-
-        x = 10002345;
-        y = 67885;
-        gcd = Integers.euclidsGreatestCommonDivsor(x, y);
-        check = 5;
-        assertTrue("Euclids GCD error. expected="+check+" got="+gcd, (gcd==check));
-    }
-
-    @Test
     public void testPowerOf2() {
         int is = 256;
         int isNot = 1673;
@@ -112,17 +91,17 @@ public class Numbers {
         assertTrue("toEnglish error. a="+a+" expected="+check+" got="+english, (check.equals(english)));
 
         a = 199;
-        check = "one-hundred ninty-nine";
+        check = "one-hundred ninety-nine";
         english = Integers.toEnglish(a);
         assertTrue("toEnglish error. a="+a+" expected="+check+" got="+english, (check.equals(english)));
 
         a = Integer.MAX_VALUE; // 2,147,483,647
-        check = "two-billion one-hundred fourty-seven-million four-hundred eighty-three-thousand six-hundred fourty-seven";
+        check = "two-billion one-hundred forty-seven-million four-hundred eighty-three-thousand six-hundred forty-seven";
         english = Integers.toEnglish(a);
         assertTrue("toEnglish error. a="+a+" expected="+check+" got="+english, (check.equals(english)));
 
         a = Integer.MIN_VALUE+1; // -2,147,483,647
-        check = "negative two-billion one-hundred fourty-seven-million four-hundred eighty-three-thousand six-hundred fourty-seven";
+        check = "negative two-billion one-hundred forty-seven-million four-hundred eighty-three-thousand six-hundred forty-seven";
         english = Integers.toEnglish(a);
         assertTrue("toEnglish error. a="+a+" expected="+check+" got="+english, (check.equals(english)));
     }

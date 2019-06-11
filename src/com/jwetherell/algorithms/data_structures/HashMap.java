@@ -9,9 +9,9 @@ import com.jwetherell.algorithms.data_structures.interfaces.IMap;
  * Hash Map using either chaining or probing. hash map is a data structure that
  * uses a hash function to map identifying values, known as keys, to their
  * associated values.
- * 
- * http://en.wikipedia.org/wiki/Hash_table
- * 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Hash_table">Hash Map/Table (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 @SuppressWarnings("unchecked")
@@ -212,9 +212,6 @@ public class HashMap<K, V> implements IMap<K,V> {
          * 
          * @param h
          *            hash to get index of.
-         * @param length
-         *            length of array
-         * 
          * @return Integer which represents the key.
          */
         private int indexOf(int h) {
@@ -514,7 +511,7 @@ public class HashMap<K, V> implements IMap<K,V> {
         @Override
         public void clear() {
             for (int i=0; i<array.length; i++)
-                array = null;
+                array[i] = null;
             size = 0;
         }
 
@@ -597,9 +594,9 @@ public class HashMap<K, V> implements IMap<K,V> {
          * @return Integer which represents the key.
          */
         private int indexOf(K key) {
-            int k = key.hashCode() % hashingKey;
-            if (k>=array.length)
-                k = k - ((k/array.length) * array.length);
+            int k = Math.abs(key.hashCode()) % hashingKey;
+            if (k >= array.length)
+                k = k - ((k / array.length) * array.length);
             return k;
         }
 

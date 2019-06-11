@@ -3,9 +3,9 @@ package com.jwetherell.algorithms.data_structures;
 /**
  * A splay tree is a self-adjusting binary search tree (BST) with the additional
  * property that recently accessed elements are quick to access again.
- * 
- * http://en.wikipedia.org/wiki/Splay_tree
- * 
+ * <p>
+ *  @see <a href="https://en.wikipedia.org/wiki/Splay_tree">Splay Tree (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 public class SplayTree<T extends Comparable<T>> extends BinarySearchTree<T> {
@@ -67,7 +67,7 @@ public class SplayTree<T extends Comparable<T>> extends BinarySearchTree<T> {
     private void splay(Node<T> node) {
         Node<T> parent = node.parent;
         Node<T> grandParent = (parent != null) ? parent.parent : null;
-        if (parent == root) {
+        if (parent != null && parent == root) {
             grandParent = parent.parent;
             // Zig step
             root = node;

@@ -9,9 +9,9 @@ import com.jwetherell.algorithms.data_structures.interfaces.ISet;
  * using a hierarchy of linked lists that connect increasingly sparse
  * subsequences of the items. These auxiliary lists allow item lookup with
  * efficiency comparable to balanced binary search trees.
- * 
- * http://en.wikipedia.org/wiki/Skip_list
- * 
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Skip_list">Skip List (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 @SuppressWarnings("unchecked")
@@ -373,9 +373,9 @@ public class SkipList<T extends Comparable<T>> implements ISet<T> {
         public String toString() {
             StringBuilder builder = new StringBuilder();
             builder.append("data=").append(data);
-            int size = next.length;
             if (next!=null) {
                 builder.append("\n").append("next=[");
+                int size = next.length;
                 for (int i=0; i<size; i++) {
                     Node<T> n = next[i];
                     if (n!=null) builder.append(n.data);

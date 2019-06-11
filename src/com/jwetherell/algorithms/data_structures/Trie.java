@@ -7,20 +7,20 @@ import com.jwetherell.algorithms.data_structures.interfaces.ITree;
 /**
  * A trie, or prefix tree, is an ordered tree data structure that is used to
  * store an associative array where the keys are usually strings.
- * 
- * == This is NOT a compact Trie. ==
- * 
- * http://en.wikipedia.org/wiki/Trie
- * 
+ * <p>
+ * NOTE: This is NOT a compact Trie
+ * <p>
+ * @see <a href="https://en.wikipedia.org/wiki/Trie">Trie (Wikipedia)</a>
+ * <br>
  * @author Justin Wetherell <phishman3579@gmail.com>
  */
 @SuppressWarnings("unchecked")
 public class Trie<C extends CharSequence> implements ITree<C> {
 
-    private int size = 0;
+    protected INodeCreator creator;
+    protected Node root;
 
-    protected INodeCreator creator = null;
-    protected Node root = null;
+    private int size = 0;
 
     public Trie() {
         this.creator = new INodeCreator() {
@@ -350,6 +350,8 @@ public class Trie<C extends CharSequence> implements ITree<C> {
         }
 
         public static <C extends CharSequence> String getString(Trie<C> tree) {
+            if (tree.root == null) 
+                return "Tree has no nodes.";
             return getString(tree.root, "", null, true);
         }
 
